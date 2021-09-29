@@ -1,5 +1,6 @@
 name: Homework Server Deployment
-on: workflow_dispatch
+push:
+    branches: [master]
 jobs:
   deploy:
     runs-on: ubuntu-latest
