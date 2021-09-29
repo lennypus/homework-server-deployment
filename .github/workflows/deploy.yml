@@ -1,6 +1,7 @@
 name: Homework Server Deployment
-push:
-    branches: [master]
+on:
+  push:
+      branches: [master]
 jobs:
   deploy:
     runs-on: ubuntu-latest
