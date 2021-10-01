@@ -10,7 +10,7 @@ func main() {
 		USERNAME := c.Param("USERNAME")
 		c.JSON(200, gin.H{
 			"status":  "success",
-			"message": "total follower USERNAME = " + USERNAME,
+			"message": "jumlah follower USERNAME = " + USERNAME,
 		})
 	})
 	router.GET("/:USERID", func(c *gin.Context) {
