@@ -6,6 +6,9 @@ import (
 
 func main() {
 	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.String(200, "Homework Rakamin Server Deployment - Lenny Puspita Sari")
+	})
 	router.GET("/follower/:USERNAME", func(c *gin.Context) {
 		USERNAME := c.Param("USERNAME")
 		c.JSON(200, gin.H{
