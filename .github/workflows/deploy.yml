@@ -17,4 +17,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: lennypus/homework-server-deployment:latest
+        tags: 921126/homework-server-deployment:latest
