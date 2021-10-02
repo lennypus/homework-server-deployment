@@ -1,14 +1,21 @@
-FROM golang:1.16.5-alpine3.14 as builder
+FROM heroku/heroku:18-build as build
 
-RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
-RUN go get -u github.com/gin-gonic/gin
-RUN go build -o main .
+# Setup buildpack
+RUN mkdir -p /tmp/buildpack/heroku/go /tmp/build_cache /tmp/env
+RUN curl https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/go.tgz | tar xz -C /tmp/buildpack/heroku/go
 
-FROM alpine:latest
-RUN mkdir /app
+#Execute Buildpack
+RUN STACK=heroku-18 /tmp/buildpack/heroku/go/bin/compile /app /tmp/build_cache /tmp/env
+
+# Prepare final, minimal image
+FROM heroku/heroku:18
+
+COPY --from=build /app /app
+ENV HOME /app
 WORKDIR /app
-COPY --from=builder /app/main /app/
-CMD ["/app/main"]
+RUN useradd -m heroku
+USER heroku
+CMD /app/bin/homework-serverdeployment
